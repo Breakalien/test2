@@ -1,0 +1,249 @@
+
+<link rel="stylesheet" href="formcatalog.css" type="text/css">
+
+<!-- Section d'un fil de cuivre
+calcul de la section d'un fil de cuivre
+données d'entrée :
+puissance de la charge
+tension batterie
+du pourcentage de tension perdue	
+-->
+<br>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!-- // Hide script from non-supportive browsers
+
+  function fclear(form)
+ {
+        form.units[0].checked = true
+        form.power.value = ""
+        form.pourcent.value = ""
+        form.long.value = ""
+        form.volt.value = ""
+        form.section_fil.value = ""
+        form.chute_tension.value = ""
+        form.perdu.value = ""
+        form.echauf.value = ""
+		form.courant.value = ""
+ }
+
+  function compute(obj)
+ {
+	    
+             val = obj.power.value * obj.long.value;
+             val = val * 2;       //coefficient de résistivité du cuivre 1,7 � 20�C; 2 � 100�C
+             if (obj.pourcent.value == "") obj.pourcent.value = 5
+             val = val *(1-(0.01*obj.pourcent.value));
+
+             val = val/obj.pourcent.value;
+             val = val/obj.volt.value;
+             val = val/obj.volt.value;
+             obj.section_fil.value = val;
+             obj.section_fil.value = Math.round(obj.section_fil.value * 100)/100
+            
+            val = obj.volt.value;
+            val = val*obj.pourcent.value;  
+            obj.chute_tension.value = val / 100;
+            obj.chute_tension.value = Math.round(obj.chute_tension.value * 100)/100;
+            
+            val = obj.power.value;
+            val = val*obj.pourcent.value;  
+            obj.perdu.value = val / 100;
+            obj.perdu.value = Math.round(obj.perdu.value * 100)/100;
+
+            val = obj.power.value / obj.volt.value;
+	    val = val / Math.pow(obj.section_fil.value,0.655);
+	    val = val / 2.4281 ;
+            val = Math.pow(val,2);
+	    val = val * 1.6911;	<!-- c'est nb de fil eleve a la puissance 0,379, puis au carr� ici 2-->
+            obj.echauf.value = val ;
+            obj.echauf.value = Math.round(obj.echauf.value * 10)/10; 
+			
+			obj.courant.value = obj.power.value / obj.volt.value; 
+
+  }
+// End hide script -->
+</SCRIPT>
+
+<form name="evalForm">
+
+<table border="0" cellpadding="0" cellspacing="0" width="500">
+	<tr>
+		<td style="border: 2px solid #046380; background-color: #4BB5C1; padding: 5px" nowrap>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="border: 2px solid #046380; background-color: #4BB5C1; padding: 5px">
+			<p align="center"><font color="red">En 12V 5% est un bon compromis pour alimenter un équipement alors que 3% est plus approprié dans un circuit de charge d'une batterie</br>
+		    Attention le séparateur décimal est le point pas la virgule !</font>
+	  </td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="500" height="80" class="nga-queryRow">
+  <tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+	<tr>
+		<td class="nga-queryLabel" align="left" valign="middle">
+			Puissance absorbée par l'équipement : 
+		</td>	
+		<td width="300" align="center" class="nga-queryValueCellInput">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td align="left">
+						<input type="text" name="power" id="power" size="10" maxlength="10" value=""> en Watts
+						
+						
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="2"></td>
+	</tr>
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="500" height="80" class="nga-queryRow">
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+	<tr>
+		<td class="nga-queryLabel" align="left" valign="middle">
+			Tension d'alimentation 
+		</td>	
+		<td width="300" align="center" class="nga-queryValueCellInput">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td align="left">
+						<input type="text" name="volt" id="volt" size="10" maxlength="10" value=""> en Volts
+						
+						
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="2"></td>
+	</tr>
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="500" height="80" class="nga-queryRow">
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+	<tr>
+		<td class="nga-queryLabel" align="left" valign="middle">
+			Longueur du fil y compris retour 
+		</td>	
+		<td width="300" align="center" class="nga-queryValueCellInput">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td align="left">
+						<input type="text" name="long" id="long" size="10" maxlength="10" value=""> 
+						en Mètres
+						
+						
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="2"></td>
+	</tr>
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="500" height="80" class="nga-queryRow">
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+	<tr>
+		<td class="nga-queryLabel" align="left" valign="middle">
+			Chute de tension tolérable 
+		</td>	
+		<td width="300" align="center" class="nga-queryValueCellInput">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td align="left">
+						<input type="text" name="pourcent" id="pourcent" size="10" maxlength="10" value=""> en % </br><font color="red">&nbsp;(5% si la cellule est laissée vide)</font>
+						
+						
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="2"></td>
+	</tr>
+	<tr>
+		<td colspan="3" height="10"></td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="500" class="nga-querySubmitRow">
+	<tr>
+		<td align="center">
+			<input type="button" value="Calculer" onClick="compute(this.form)">&nbsp;&nbsp;
+		</td>
+		<td align="center">
+			<input type="reset" value="Reset" onClick="fclear(document.evalForm)">&nbsp;&nbsp;
+		</td>
+	</tr>
+<tr>
+		<td style="border: 10px solid #046380; background-color: #4BB5C1; padding: 5px">
+			<p align="center"><font color="white"> REMARQUE : l'échauffement maximal acceptable en régime continu est 60°.</br>
+		    Pour respecter cette règle il faut jouer sur la chute de tension acceptable</br>
+Plus elle est faible plus l'échauffement diminue.</br>
+Donc si l'échauffement dépasse 60° faites varier la chute de tension acceptable sans changer les autres valeurs et relancer le calcul</font>
+	  </td>
+	</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="500" class="nga-queryRow">
+	<tr>
+		<tr>
+		<td class="nga-queryLabelNote" align="left" valign="middle">
+			Résultats:
+		</td>
+	</tr>
+                 <td class="nga-queryLabel" align="left" valign="middle">
+		</td>	
+		<td align="left" class="nga-queryValueCell">
+			<table>
+            	<tr>	
+					<td>
+						<input name="courant" type="text" id="courant" value="" size="10" maxlength="10" readonly="readonly"  align="middle" /> Courant en ampères
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input  name="section_fil" type="text" id="section_fil" value="" size="10" maxlength="10" readonly="readonly"  align="middle">  Section du fil en mm2
+					</td>
+				</tr>
+                                       <tr>
+					<td>
+						<input name="chute_tension" type="text" id="chute_tension" value="" size="10" maxlength="10" readonly="readonly">  Chute de tension en Volts
+					</td>
+				</tr>
+			        <tr>
+					<td>
+						<input name="perdu" type="text" id="perdu" value="" size="10" maxlength="10" readonly="readonly"> Puissance perdue en Watts
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input name="echauf" type="text" id="echauf" style="color:#B70113;font-style:bold" value="" size="10" maxlength="10" readonly="readonly"> 
+						Echauffement des fils en degrés
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="2"></td>
+	</tr>
+</table>
+
+</form>
